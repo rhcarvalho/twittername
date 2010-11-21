@@ -35,5 +35,12 @@ source = range(20)
 for item in source:
     q.put(item)
 
-q.join()       # block until all tasks are done
-print "All done in %.2f seconds." % (now() - t0)
+try:
+    while not q.empty():
+        sleep(0.1)
+    q.join()       # block until all tasks are done
+except KeyboardInterrupt:
+    # Okay, so you want to stop? Will work only before call to join.
+    raise SystemExit(1)
+finally:
+    print "All done in %.2f seconds." % (now() - t0)
