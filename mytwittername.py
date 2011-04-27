@@ -9,6 +9,15 @@ from collections import deque
 import json
 import sys
 
+# TODO
+# - ETA
+# - Easy way to explore valid usernames
+# - cache metadata (store timestamp)
+# - autosave cache every x minutes (on another thread)
+# - consume less memory:
+#   - no need to keep cache in memory
+#   - no need to fill in the Queue at once
+
 # Load cache from file, or start fresh
 try:
     cachef = open("cache", "r")
@@ -92,7 +101,7 @@ def print_available_names(available_names_queue):
             available_names_queue.task_done()
 
 
-def main(min=3, max=3, num_worker_threads=40):
+def main(min=3, max=6, num_worker_threads=40):
     t0 = now()
     
     names_queue = PriorityQueue()
